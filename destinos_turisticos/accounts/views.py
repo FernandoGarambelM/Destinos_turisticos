@@ -13,7 +13,7 @@ def login(request):
         if user is not None:
             if user.is_superuser:
                 auth.login(request, user)
-                return redirect("/admin")   
+                return redirect("/gestionar")   
             else:
                 auth.login(request, user)
                 return redirect("/")

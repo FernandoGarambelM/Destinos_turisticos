@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestionar Destinos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Gestionar Destinos Turísticos</h1>
+    
+    <!-- Formulario de Añadir/Modificar -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="modificar" {% if not id %}disabled{% endif %}>Modificar</button>
+        <button type="submit" name="eliminar" {% if not id %}disabled{% endif %}>Eliminar</button>
+        <button type="submit" name="añadir" {% if id %}disabled{% endif %}>Añadir</button>
+    </form>
+    
+</body>
+</html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Destination
 from .forms import DestinosTuristicosForm
 # Create your views here.
@@ -9,30 +9,32 @@ def index(request):
 
     return render(request, "index.html", {'dests': dests})
 
-def añadir_destino(request):
+def gestionar_destinos(request, id=None):
     if request.method == 'POST':
-        form = DestinosTuristicosForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
+        if id:
+            destino = get_object_or_404(Destination, id=id)
+            form = DestinosTuristicosForm(request.POST, request.FILES, instance=destino)
+            if 'modificar' in request.POST:
+                if form.is_valid():
+                    form.save()
+            elif 'eliminar' in request.POST:
+                destino.delete()
+        else:
+            form = DestinosTuristicosForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+        return redirect('gestionar_destinos')
+    
     else:
-        form = DestinosTuristicosForm()
-    return render(request, 'administrador.html', {'form': form})
-
-def modificar_destino(request, id):
-    destino = Destination.objects.get(id=id)
-    if request.method == 'POST':
-        form = DestinosTuristicosForm(request.POST, request.FILES, instance=destino)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = DestinosTuristicosForm(instance=destino)
-    return render(request, 'administrador.html', {'form': form, 'destino': destino})
-
-def eliminar_destino(request, id):
-    destino = Destination.objects.get(id=id)
-    if request.method == 'POST':
-        destino.delete()
-        return redirect('index')
-    return render(request, 'administrador.html', {'destino': destino})
+        if id:
+            destino = get_object_or_404(Destination, id=id)
+            form = DestinosTuristicosForm(instance=destino)
+        else:
+            form = DestinosTuristicosForm()
+        
+    destinos = Destination.objects.all()
+    return render(request, 'gestionar_destinos.html', {
+        'form': form,
+        'destinos': destinos,
+        'id': id,
+    })

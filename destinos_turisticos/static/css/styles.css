@@ -11,7 +11,23 @@ h1 {
     background-color: #4CAF50;
     color: white;
 }
+h2 {
+    text-align: center;
+    padding: 20px;
+}
+a {
+    background-color: #4CAF50;
+    color: white;
+}
 
+ul {
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 form {
     width: 50%;
     margin: 20px auto;

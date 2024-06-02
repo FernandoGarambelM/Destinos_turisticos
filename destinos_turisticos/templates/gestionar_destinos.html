@@ -17,5 +17,18 @@
         <button type="submit" name="añadir" {% if id %}disabled{% endif %}>Añadir</button>
     </form>
     
+    <h2>Lista de Destinos</h2>
+    <ul>
+        {% for destino in destinos %}
+            <li>
+                <h2>{{ destino.name }}</h2>
+                <p>{{ destino.desc}}</p>
+                <p>Precio: {{ destino.price}}</p>
+                <p>{% if destino.offer %}En oferta{% endif %}</p>
+                <a href="{% url 'modificar_destino' destino.id %}">Seleccionar</a>
+            </li>
+        {% endfor %}
+    </ul>
+    
 </body>
 </html>

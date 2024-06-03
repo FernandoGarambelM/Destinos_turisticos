@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Alumnos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion de Alumnos</h1>
+        <div class="form-group">
+            <h3>Agregar Alumno</h3>
+            <form method="POST" action="{% url 'agregar_alumno' %}">
+                {% csrf_token %}
+                {{ alumno_form.as_p }}
+                <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+            </form>
+        </div>
+        <div class="form-group">
+            <h3>Agregar Curso</h3>
+            <form method="POST" action="{% url 'agregar_curso' %}">
+                {% csrf_token %}
+                {{ curso_form.as_p }}
+                <button type="submit" class="btn btn-primary">Agregar Curso</button>
+            </form>
+        </div>
+        <div class="form-group">
+            <h3>Agregar Nota</h3>
+            <form method="POST" action="{% url 'agregar_nota' %}">
+                {% csrf_token %}
+                {{ nota_form.as_p }}
+                <button type="submit" class="btn btn-primary">Agregar Nota</button>
+            </form>
+        </div>
+        <hr>
+        <h2>Alumnos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha de Nacimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alumno in alumnos %}
+                <tr>
+                    <td>{{ alumno.id }}</td>
+                    <td>{{ alumno.nombre }}</td>
+                    <td>{{ alumno.apellido }}</td>
+                    <td>{{ alumno.fecha_nacimiento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Cursos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curso in cursos %}
+                <tr>
+                    <td>{{ curso.id }}</td>
+                    <td>{{ curso.nombre }}</td>
+                    <td>{{ curso.descripcion }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Notas</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Alumno</th>
+                    <th>Curso</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nota in notas %}
+                <tr>
+                    <td>{{ nota.id }}</td>
+                    <td>{{ nota.alumno }}</td>
+                    <td>{{ nota.curso }}</td>
+                    <td>{{ nota.nota }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

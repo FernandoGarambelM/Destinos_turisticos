@@ -226,8 +226,17 @@ DJANGO_SUPERUSER_PASSWORD=123456
 # Ejecutar el comando createsuperuser sin interaccion
 python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_SUPERUSER_USERNAME', '$DJANGO_SUPERUSER_EMAIL', '$DJANGO_SUPERUSER_PASSWORD') if not User.objects.filter(username='$DJANGO_SUPERUSER_USERNAME').exists() else print('Superusuario ya existe.')"
 	\end{lstlisting}
-
-\section{Instalar Django en el Ambiente Virtual}
+	\begin{itemize}
+		\item Realizamos migraciones para enlazar la base de datos
+	\end{itemize}
+	\begin{lstlisting}[language=bash,caption={Codigo para realizar migraciones}][H]
+		python manage.py makemigrations
+		python manage.py migrations
+	\end{lstlisting}
+	\begin{itemize}
+		\item Despues de seguir estos pasos la plantilla ya funciona por completo
+	\end{itemize}
+\section{Adecuar la plantilla a un proyecto en blanco de Django}
 	\begin{lstlisting}[language=bash,caption={Instalar Django}][H]
 		pip install django
 	\end{lstlisting}

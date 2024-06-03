@@ -1,39 +1,40 @@
-from django.shortcuts import render, redirect
-from .models import Alumno, Curso, NotasAlumnosPorCurso
-from .forms import AlumnoForm, CursoForm, NotasAlumnosPorCursoForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Destination
+from .forms import DestinosTuristicosForm
+# Create your views here.
 
-def gestionar_datos(request):
-    alumnos = Alumno.objects.all()
-    cursos = Curso.objects.all()
-    notas = NotasAlumnosPorCurso.objects.all()
+def index(request):
+   
+    dests = Destination.objects.all()
 
-    context = {
-        'alumno_form': AlumnoForm(prefix='alumno'),
-        'curso_form': CursoForm(prefix='curso'),
-        'nota_form': NotasAlumnosPorCursoForm(prefix='nota'),
-        'alumnos': alumnos,
-        'cursos': cursos,
-        'notas': notas
-    }
+    return render(request, "index.html", {'dests': dests})
 
-    return render(request, 'gestion_alumnos/gestionar_datos.html', context)
-def agregar_alumno(request):
-    if request.method == "POST":
-        alumno_form = AlumnoForm(request.POST, prefix='alumno')
-        if alumno_form.is_valid():
-            alumno_form.save()
-        return redirect('gestionar_datos')
-
-def agregar_curso(request):
-    if request.method == "POST":
-        curso_form = CursoForm(request.POST, prefix='curso')
-        if curso_form.is_valid():
-            curso_form.save()
-        return redirect('gestionar_datos')
-
-def agregar_nota(request):
-    if request.method == "POST":
-        nota_form = NotasAlumnosPorCursoForm(request.POST, prefix='nota')
-        if nota_form.is_valid():
-            nota_form.save()
-        return redirect('gestionar_datos')
+def gestionar_destinos(request, id=None):
+    if request.method == 'POST':
+        if id:
+            destino = get_object_or_404(Destination, id=id)
+            form = DestinosTuristicosForm(request.POST, request.FILES, instance=destino)
+            if 'modificar' in request.POST:
+                if form.is_valid():
+                    form.save()
+            elif 'eliminar' in request.POST:
+                destino.delete()
+        else:
+            form = DestinosTuristicosForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+        return redirect('gestionar_destinos')
+    
+    else:
+        if id:
+            destino = get_object_or_404(Destination, id=id)
+            form = DestinosTuristicosForm(instance=destino)
+        else:
+            form = DestinosTuristicosForm()
+        
+    destinos = Destination.objects.all()
+    return render(request, 'gestionar_destinos.html', {
+        'form': form,
+        'destinos': destinos,
+        'id': id,
+    })

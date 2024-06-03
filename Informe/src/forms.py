@@ -1,17 +1,7 @@
 from django import forms
-from .models import Alumno, Curso, NotasAlumnosPorCurso
+from .models import Destination
 
-class AlumnoForm(forms.ModelForm):
+class DestinosTuristicosForm(forms.ModelForm):
     class Meta:
-        model = Alumno
-        fields = '__all__'
-
-class CursoForm(forms.ModelForm):
-    class Meta:
-        model = Curso
-        fields = '__all__'
-
-class NotasAlumnosPorCursoForm(forms.ModelForm):
-    class Meta:
-        model = NotasAlumnosPorCurso
-        fields = '__all__'
+        model = Destination
+        fields = ['name','img', 'desc',  'price', 'offer']

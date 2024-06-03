@@ -193,16 +193,40 @@
 		\item \url{Video}	
 	\end{itemize}
 	\clearpage
-\section{Creando ambiente virtual}
-	\begin{lstlisting}[language=bash,caption={Instalar virtualenv}][H]
-		pip install virtualenv
-	\end{lstlisting}
-	\begin{lstlisting}[language=bash,caption={Crear el ambiente virtual}][H]
-		virtualenv env
-	\end{lstlisting}
+\section{Replicando la actividad del video}
+	\begin{itemize}
+		\item Primero ingresamos al entorno virtual
+	\end{itemize}
 	\begin{lstlisting}[language=bash,caption={Activar el ambiente virtual}][H]
 		env\Scripts\activate
 	\end{lstlisting}
+	\begin{lstlisting}[language=bash,caption={Clonar el repositorio}][H]
+		git clone https://github.com/navinreddy20/django-telusko-codes
+	\end{lstlisting}
+	\begin{itemize}
+		\item Luego instalamos postgresql y pgadmin 
+		\item Luego instalamos al entorno virtual psycopg2-binary y Pillow
+	\end{itemize}
+	\begin{lstlisting}[language=bash,caption={Instalando psycopg2-binary y Pillow}][H]
+		pip install psycopg2-binary
+		pip install Pillow
+	\end{lstlisting}
+	\begin{itemize}
+		\item  Despues de instalar, creamos un superusuario con el siguiente script
+	\end{itemize}
+\begin{lstlisting}[language=bash,caption={Script para crear un superusuario}][H]
+
+#!/bin/sh
+
+# Variables de entorno para el superusuario
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_EMAIL=admin@example.com
+DJANGO_SUPERUSER_PASSWORD=123456
+
+# Ejecutar el comando createsuperuser sin interaccion
+python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_SUPERUSER_USERNAME', '$DJANGO_SUPERUSER_EMAIL', '$DJANGO_SUPERUSER_PASSWORD') if not User.objects.filter(username='$DJANGO_SUPERUSER_USERNAME').exists() else print('Superusuario ya existe.')"
+	\end{lstlisting}
+
 \section{Instalar Django en el Ambiente Virtual}
 	\begin{lstlisting}[language=bash,caption={Instalar Django}][H]
 		pip install django

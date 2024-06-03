@@ -280,6 +280,46 @@ python manage.py shell -c "from django.contrib.auth import get_user_model; User 
 							{% endfor %}
 
 	\end{lstlisting}
+	\begin{itemize}
+		\item Se crea en templates gestionar destinos.html
+	\end{itemize}	
+\begin{lstlisting}[language=bash,caption={Html de gestionar destinos.html}][H]
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestionar Destinos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Gestionar Destinos Turisticos</h1>
+    
+    <!-- Formulario de Aniadir/Modificar -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="modificar" {% if not id %}disabled{% endif %}>Modificar</button>
+        <button type="submit" name="eliminar" {% if not id %}disabled{% endif %}>Eliminar</button>
+        <button type="submit" name="aniadir" {% if id %}disabled{% endif %}>Anadir</button>
+    </form>
+    
+    <h2>Lista de Destinos</h2>
+    <ul>
+        {% for destino in destinos %}
+            <li>
+                <h2>{{ destino.name }}</h2>
+                <p>{{ destino.desc}}</p>
+                <p>Precio: {{ destino.price}}</p>
+                <p>{% if destino.offer %}En oferta{% endif %}</p>
+                <a href="{% url 'modificar_destino' destino.id %}">Seleccionar</a>
+            </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
+
+	\end{lstlisting}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1.0\textwidth,keepaspectratio]{img/Vista3.png}

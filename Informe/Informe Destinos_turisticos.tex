@@ -249,6 +249,37 @@ python manage.py shell -c "from django.contrib.auth import get_user_model; User 
 		\item Luego creamos views.py
 	\end{itemize}	
 \lstinputlisting[language=Python, caption={Código de views.py},numbers=left,]{src/views.py}
+	\begin{itemize}
+		\item Luego agregamos urls.py para que Django pueda leerlos
+	\end{itemize}	
+\lstinputlisting[language=Python, caption={Código de urls.py},numbers=left,]{src/urls.py}	
+	\begin{itemize}
+		\item Usamos la  plantilla de travello, especificamente la siguiente parte para listar los destinos turisticos con if y for
+	\end{itemize}	
+	\begin{lstlisting}[language=bash,caption={Pedazo de html donde se usa  for e if}][H]
+						{% for dest in dests %}
+							<!-- Destination -->
+							<div class="destination item">
+								<div class="destination_image">
+									<img src="{{dest.img.url}}" alt="">
+
+									{% if dest.offer %}
+									<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
+									{% endif %}
+								</div>
+								<div class="destination_content">
+									<div class="destination_title"><a href="destinations.html">{{dest.name}}</a>
+									</div>
+									<div class="destination_subtitle">
+										<p>{{dest.desc}}</p>
+									</div>
+									<div class="destination_price">From ${{dest.price}}</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+	\end{lstlisting}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1.0\textwidth,keepaspectratio]{img/Vista3.png}
